@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Allocate</title>
+    <link rel="stylesheet" href="css\main.css">
+
+</head>
+
+<body>
+    <div class="sign_in">
+        <form action="/login" method="post" name="sign_in_form" id="login_form">
+            <!-- <label for="user name">user name/user id</label> -->
+            <input type="text" class="user_name" name="user_id" placeholder="enter user id">
+
+            <!-- <label for="password">password</label> -->
+            <div class="password-input"><input type="password" class="password" name="password" placeholder="enter password" id="input-password">
+                <img src="views\hidden.png" alt="show" class="show-icon" id="show-icon"></div>
+
+            <!-- <a href="seatallocator.html" class="login-button">seat</a> -->
+            <input type="submit" class="login-button" value="login">
+        </form>
+        <a href="Avatar.jpg" class="links">Forgotten password?</a>
+        <!-- <div> -->
+        <svg width="100%" height="1%" class="line">
+               <line x1="20" y1="20%" x2="95%" y2="20%" stroke="lightgrey" stroke-width="1"/>
+            </svg>
+        <!-- </div> -->
+        <form action="/signuppage" method="post">
+            <input type="submit" value="Sign up" class="sign_up-button" id="sign_up">
+        </form>
+        <script>
+            var icon = document.getElementById("show-icon");
+            var pass = document.getElementById("input-password");
+            icon.addEventListener('mouseover', function() {
+                icon.src = "view.png";
+                pass.type = 'text';
+            });
+            icon.addEventListener('mouseout', function() {
+                pass.type = 'password';
+                icon.src = "hidden.png";
+            });
+            document.getElementById('sign_up').addEventListener('click', function() {
+                window.location.href = 'sign_up.html'; // Replace with the URL of the new page
+            });
+        </script>
+    </div>
+</body>
+
+</html>

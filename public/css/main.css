@@ -1,0 +1,187 @@
+    div.sign_in {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        background-color: #fff;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+        box-sizing: border-box;
+        margin: 40px 0 0;
+        margin-top: 200px;
+        padding: 20px 0 28px;
+        width: 396px;
+    }
+    
+    body {
+        display: flex;
+        justify-content: center;
+        vertical-align: middle;
+        align-items: center;
+    }
+    
+    input.password {
+        border: none;
+        width: 300px;
+        margin-left: 0px;
+        margin-right: 0px;
+        /* margin-top: 2px; */
+        margin-bottom: 0px;
+        height: 30px;
+    }
+    
+    div.password-input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        vertical-align: top;
+        border-color: rgb(222, 215, 215);
+        border-style: ridge;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        margin-left: 8px;
+        margin-right: 8px;
+        width: 362px;
+        height: 46px;
+        outline: none;
+    }
+    
+    div.password-input:hover {
+        border: 2px solid rgb(100, 100, 250);
+        /* border-color: lightblue; */
+        box-shadow: 2px 2px 5px rgb(113, 113, 242);
+    }
+    
+    div.password-input:focus {
+        border: 2px solid rgb(100, 100, 250);
+        /* border-color: lightblue; */
+        box-shadow: 2px 2px 5px rgb(113, 113, 242);
+    }
+    
+    .show-icon {
+        width: 30px;
+        height: auto;
+        margin-top: 1px;
+        align-self: center;
+        cursor: pointer;
+        margin-right: 1px;
+    }
+    
+    .show-icon:hover {
+        background-color: lightgrey;
+        border-radius: 50%;
+    }
+    
+    input {
+        border-radius: 6px;
+        border-color: rgb(222, 215, 215);
+        /* border: none; */
+        /* box-shadow: none; */
+        border-style: ridge;
+        background-color: #fff;
+        margin-bottom: 8px;
+        margin-left: 8px;
+        margin-right: 8px;
+        padding: 2px;
+        color: #1c1e21;
+        vertical-align: text-top;
+        transition: 0.15s;
+        font-size: 20px;
+        line-height: 48px;
+        padding: 0 16px;
+        width: 332px;
+    }
+    
+    input.password:hover {
+        border: none;
+        box-shadow: none;
+    }
+    
+    input.password:focus {
+        background-color: #cddaeb;
+        outline: none;
+    }
+    
+    input.user_name:focus {
+        border: 2px solid rgb(100, 100, 250);
+        border-color: lightblue;
+        background-color: #cddaeb;
+        box-shadow: 2px 2px 5px rgb(113, 113, 242);
+        outline: blue;
+    }
+    
+    input.user_name:hover {
+        border: 2px solid rgb(100, 100, 250);
+        /* border-color: lightblue; */
+        box-shadow: 2px 2px 5px rgb(113, 113, 242);
+    }
+    
+    body {
+        background-color: rgb(241, 240, 240);
+        align-content: center;
+    }
+    
+    .login-button:hover {
+        opacity: 0.8;
+    }
+    
+    .login-button:active {
+        background-color: white;
+        color: #2579e7;
+    }
+    
+    .sign_up-button {
+        color: antiquewhite;
+        background-color: #42b72a;
+        border-radius: 6px;
+        border: none;
+        width: 150px;
+        height: 48px;
+        font-weight: 500;
+        font-size: 20px;
+        cursor: pointer;
+        /* box-shadow: 2px 2px 5px lightgreen; */
+    }
+    
+    .sign_up-button:hover {
+        background-color: #36a420;
+        box-shadow: 2px 2px 5px lightgreen;
+        color: white;
+    }
+    
+    .line {
+        height: 10px;
+        margin: 10px;
+    }
+    
+    .login-button {
+        background-color: #0866ff;
+        border: none;
+        color: antiquewhite;
+        border-radius: 6px;
+        font-size: 20px;
+        line-height: 48px;
+        padding: 0 16px;
+        width: 366px;
+        cursor: pointer;
+        margin-bottom: 5px;
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    
+    .links {
+        /* color: #385898; */
+        cursor: pointer;
+        text-decoration: none;
+        color: #0866ff;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: Helvetica, Arial, sans-serif;
+        /* font-size: 12px; */
+    }
+    
+    .links:hover {
+        text-decoration: underline;
+    }

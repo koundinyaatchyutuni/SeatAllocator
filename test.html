@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        .column {
+            width: 45%;
+            min-height: 300px;
+            padding: 10px;
+            border: 2px solid #000;
+        }
+        
+        .item {
+            padding: 10px;
+            margin: 5px;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="column" id="column1">
+            <div class="item" draggable="true" id="item1">Item 1</div>
+            <div class="item" draggable="true" id="item2">Item 2</div>
+        </div>
+        <div class="column" id="column2">
+            <div class="item" draggable="true" id="item3">Item 3</div>
+            <div class="item" draggable="true" id="item4">Item 4</div>
+        </div>
+    </div>
+
+    <script>
+        const items = document.querySelectorAll('.item');
+        const columns = document.querySelectorAll('.column');
+
+        items.forEach(item => {
+            item.addEventListener('dragstart', dragStart);
+        });
+
+        columns.forEach(column => {
+            column.addEventListener('dragover', dragOver);
+            column.addEventListener('drop', drop);
+        });
+
+        function dragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.id);
+            setTimeout(() => {
+                e.target.classList.add('hide');
+            }, 0);
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            const id = e.dataTransfer.getData('text');
+            const draggableElement = document.getElementById(id);
+            draggableElement.classList.remove('hide');
+            e.target.appendChild(draggableElement);
+        }
+    </script>
+</body>
+
+</html>
