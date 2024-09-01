@@ -5,8 +5,38 @@ const path = require('path');
 const app = express();
 const port = 3000;
 const bcrypt = require('bcryptjs');
-// const mongoose = require('mongoose');
+const { type } = require('os');
+const mongoose = require('mongoose');
+const userSchema = new mongoose.Schema({
+    User_id: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    first_name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true // You can enforce uniqueness on other fields as well
+    },
+    phone_no: {
+        type: Number,
+        unique: true
+    },
+    rank: {
+        type: Number,
+        required: true,
+        unique: true
+    }
 
+});
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -23,7 +53,7 @@ app.post('/login', async(req, res) => {
     };
     await client.connect();
     const database = client.db('User_data');
-    const collection = database.collection('Uid');
+    const collection = database.collection('Uinfo');
     // Check if user exists
     const user = await collection.findOne({ 'user_id': data.user_id });
     if (!user) {
@@ -52,11 +82,13 @@ app.post('/submit-form', async(req, res) => {
     try {
         await client.connect();
         const database = client.db('User_data');
-        const collection = database.collection('Uid');
+        const collection = database.collection('Uinfo');
         const dataToInsert = {
             user_id: req.body.user_id,
             password: req.body.password,
+            first_name: req.body.first_name,
             email: req.body.email,
+            phone_no: req.body.phone_number,
             rank: req.body.rank
                 // Add other fields as needed
         };
@@ -65,13 +97,12 @@ app.post('/submit-form', async(req, res) => {
         dataToInsert.password = await bcrypt.hash(dataToInsert.password, salt);
         const result = await collection.insertOne(dataToInsert);
         console.log('Form data inserted:', result);
+        res.redirect('/');
+        // res.status(200).send('Data submitted successfully!');
 
-        res.status(200).send('Data submitted successfully!');
     } catch (error) {
         console.error('Error inserting data:', error);
         res.status(500).send('An error occurred while submitting the data.');
-    } finally {
-        await client.close();
     }
 });
 

@@ -12,27 +12,26 @@
     <div class="main_container">
         <form action="/submit-form" method="post" id="user_form">
             <div class="name_input">
-                <input type="text" class="first_name" placeholder="first name">
+                <input type="text" class="first_name" placeholder="first name" name="first_name" required>
                 <input type="text" class="last_name" placeholder="last name">
             </div>
             <div class="contact_details">
-                <input type="tel" class="phone_no" name="phone number" placeholder="phone numer">
-                <input type="email" class="email" name="email" placeholder="email">
+                <input type="tel" class="phone_no" name="phone_number" placeholder="phone numer">
+                <input type="email" class="email" name="email" placeholder="email" required>
             </div>
             <div class="user_id">
-                <input type="text" class="user_id" name="user_id" placeholder="user_id">
-                <input type="number" class="rank" name="rank" placeholder="rank">
+                <input type="text" class="user_id" name="user_id" placeholder="user_id" required>
+                <input type="number" class="rank" name="rank" placeholder="rank" required>
             </div>
             <div class="password_setup">
-                <input type="password" class="create_password" name="password" placeholder="enter a password" id="password">
-                <input type="password" class="conform_password" placeholder="conform password" id="cnf_password">
+                <input type="password" class="create_password" name="password" placeholder="enter a password" id="password" required>
+                <input type="password" class="conform_password" placeholder="conform password" id="cnf_password" required>
 
             </div>
             <div>
                 <h1 id="alert"></h1>
             </div>
-            <input type="submit" value="Submit">
-            <BUTTOn type="submit" class="sign_up" id="sign_up">Create Profile</BUTTOn>
+            <input type="submit" value="Submit" class="sign_up" id="sign_up">
         </form>
         <script src="js\sign_up.js"></script>
     </div>
