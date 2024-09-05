@@ -4,32 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seat Allocator</title>
-    <link rel="stylesheet" href="css\seatallocator.css">
+    <title>Counseling Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+        
+        .college-list,
+        .edit-section {
+            width: 45%;
+        }
+        
+        .college-list button {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        
+        .edit-section textarea {
+            width: 100%;
+            height: 200px;
+        }
+    </style>
 </head>
 
 <body>
-    <header id="header">
-        <h1>USER FULL NAME</h1>
-    </header>
+
+    <h1>Counseling Form</h1>
+
     <div class="container">
-        <div class="collages">
-            <button type="menu" class="clgs">GVP</button>
-            <button type="menu" class="clgs">SRKR</button>
-            <button type="menu" class="clgs">RVR</button>
-            <button type="menu" class="clgs">KLU</button>
-            <button type="menu" class="clgs">GITAM</button>
-            <button type="menu" class="clgs">VVIT</button>
+        <div class="college-list">
+            <h2>Select a College</h2>
+            <button onclick="selectCollege('College A')">College A</button>
+            <button onclick="selectCollege('College B')">College B</button>
+            <button onclick="selectCollege('College C')">College C</button>
+            <!-- Add more buttons for colleges as needed -->
         </div>
-        <div class="placeholder">
-            <div class="places">1.</div>
-            <div class="places">2.</div>
-            <div class="places">3.</div>
-            <div class="places">4.</div>
-            <div class="places">5.</div>
-            <div class="places">6.</div>
+
+        <div class="edit-section">
+            <h2>Selected College</h2>
+            <textarea id="collegeDetails" placeholder="Details about the college will appear here..."></textarea>
         </div>
     </div>
+
+    <button id="submitBtn" onclick="submitResponse()">Submit</button>
+
+    <script>
+        // Function to select and display the college name in the text area
+        function selectCollege(college) {
+            document.getElementById('collegeDetails').value = `You selected ${college}. Feel free to edit the details.`;
+        }
+
+        // Function to submit the response (you can customize it further to send the data to the server)
+        function submitResponse() {
+            const collegeDetails = document.getElementById('collegeDetails').value;
+            alert('Submitted: ' + collegeDetails);
+            // Here, you can add code to send the data to a server using fetch() or AJAX
+        }
+    </script>
+
 </body>
 
 </html>

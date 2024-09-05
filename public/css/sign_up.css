@@ -8,6 +8,14 @@ body {
     vertical-align: middle;
 }
 
+input.user_id {
+    margin-bottom: 0px;
+}
+
+input.rank {
+    margin-bottom: 0px;
+}
+
 input {
     border-radius: 6px;
     border-color: rgb(100, 250, 117);
@@ -79,4 +87,14 @@ div.main_container {
     background-color: #36a420;
     box-shadow: 2px 2px 5px lightgreen;
     color: white;
+}
+
+#user-availability {
+    margin: 0px;
+    width: 340px;
+    color: #951a95;
+    text-align: end;
+    text-shadow: 1px 1px 1px black;
+    vertical-align: text-top;
+    font-size: 15px;
 }
