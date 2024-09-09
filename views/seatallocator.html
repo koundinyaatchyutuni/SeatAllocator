@@ -49,24 +49,32 @@
         </div>
 
         <div class="edit-section">
-            <h2>Selected College</h2>
-            <textarea id="collegeDetails" placeholder="Details about the college will appear here..."></textarea>
+            <h2>Selected Colleges (in order)</h2>
+            <textarea id="collegeDetails" placeholder="Selected colleges will appear here..." readonly></textarea>
         </div>
     </div>
 
     <button id="submitBtn" onclick="submitResponse()">Submit</button>
 
     <script>
-        // Function to select and display the college name in the text area
+        let selectedColleges = [];
+
+        // Function to select and display the college name in the order they are selected
         function selectCollege(college) {
-            document.getElementById('collegeDetails').value = `You selected ${college}. Feel free to edit the details.`;
+            // Add the selected college to the array
+            selectedColleges.push(college);
+
+            // Display the selected colleges in the text area
+            document.getElementById('collegeDetails').value = `Selected Colleges (in order):\n` + selectedColleges.join('\n');
         }
 
-        // Function to submit the response (you can customize it further to send the data to the server)
+        // Function to submit the response
         function submitResponse() {
-            const collegeDetails = document.getElementById('collegeDetails').value;
-            alert('Submitted: ' + collegeDetails);
-            // Here, you can add code to send the data to a server using fetch() or AJAX
+            // Get the ordered list of selected colleges
+            const collegeDetails = selectedColleges.join(', ');
+            alert('You submitted the following order of colleges: ' + collegeDetails);
+
+            // You can add code here to send this data to a server using fetch() or AJAX
         }
     </script>
 

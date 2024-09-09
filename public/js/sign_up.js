@@ -1,6 +1,38 @@
 const givenPassword = document.getElementById("password");
 const cnfPassword = document.getElementById("cnf_password");
+var id = document.getElementById("user_id");
 const button = document.getElementById("sign_up");
+
+id.addEventListener('input', async function(event) {
+    event.preventDefault();
+    const userId = id.value;
+    const resp = await fetch('/is_unique_userid', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user_id: userId })
+    });
+
+    const data = await resp.json();
+    const validate = document.getElementById("user-availability");
+    const sign_upButton = document.getElementById("sign_up");
+    if (data.available) {
+        validate.innerHTML = "user ID available ✅";
+        validate.style.color = 'green';
+        sign_upButton.addEventListener('mouseover', () => {
+            sign_upButton.style.cursor = 'pointer';
+        });
+        sign_upButton.disabled = false;
+    } else {
+        validate.innerHTML = "try another user ID ❌";
+        validate.style.color = 'red';
+        sign_upButton.addEventListener('mouseover', () => {
+            sign_upButton.style.cursor = 'not-allowed';
+        });
+        sign_upButton.disabled = true;
+    }
+});
 
 button.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -11,7 +43,7 @@ button.addEventListener('submit', function(event) {
                 // headers: {
                 //     'Content-Type': 'application/json',
                 // },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(formData)
             })
             .then(response => response.json())
             .then(data => {

@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const path = require('path');
 const app = express();
@@ -7,6 +8,7 @@ const port = 3000;
 const bcrypt = require('bcryptjs');
 const { type } = require('os');
 const mongoose = require('mongoose');
+const { error } = require('console');
 const userSchema = new mongoose.Schema({
     User_id: {
         type: String,
@@ -41,11 +43,16 @@ const userSchema = new mongoose.Schema({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 // MongoDB Connection URI
 const uri = "mongodb+srv://old-man_07:Koundinya_1@cluster0.a5qcwu9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // MongoDB Client
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect();
+const database = client.db('User_data');
+const collection = database.collection('Uinfo');
+console.log("it is connected!!!!");
 app.post('/login', async(req, res) => {
     const data = {
         user_id: req.body.user_id,
@@ -67,16 +74,27 @@ app.post('/login', async(req, res) => {
     } else {
         res.redirect('/seatallocator');
     }
-
-    // Generate JWT
-    // const token = jwt.sign({ userId: user._id }, 'YOUR_JWT_SECRET', {
-    //     expiresIn: '1h',
-    // });
-
-    // res.json({ token });
 });
 app.post('/signuppage', async(req, res) => {
     res.redirect('/sign_up');
+});
+
+
+app.post('/is_unique_userid', async(req, res) => {
+    try {
+        const uid = req.body.user_id;
+        // console.log(uid);
+        const user = await collection.findOne({ 'user_id': uid });
+        // console.log(user);
+        if (!user) {
+            res.json({ available: true });
+        } else {
+            res.json({ available: false });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 app.post('/submit-form', async(req, res) => {
     try {
