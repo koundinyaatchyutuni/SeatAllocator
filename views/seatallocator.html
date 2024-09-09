@@ -4,77 +4,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Counseling Page</title>
+    <title>Reorderable List</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
         }
         
         .container {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px;
-        }
-        
-        .college-list,
-        .edit-section {
             width: 45%;
         }
         
-        .college-list button {
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            width: 100%;
+        .buttons-list {
+            display: flex;
+            flex-direction: column;
         }
         
-        .edit-section textarea {
-            width: 100%;
-            height: 200px;
+        .buttons-list button {
+            margin: 10px 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        .selected-list {
+            border: 1px solid black;
+            padding: 20px;
+            min-height: 300px;
+            background-color: #f9f9f9;
+        }
+        
+        .selected-list li {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: move;
+            list-style-type: none;
         }
     </style>
 </head>
 
 <body>
 
-    <h1>Counseling Form</h1>
-
-    <div class="container">
-        <div class="college-list">
-            <h2>Select a College</h2>
-            <button onclick="selectCollege('College A')">College A</button>
-            <button onclick="selectCollege('College B')">College B</button>
-            <button onclick="selectCollege('College C')">College C</button>
-            <!-- Add more buttons for colleges as needed -->
-        </div>
-
-        <div class="edit-section">
-            <h2>Selected Colleges (in order)</h2>
-            <textarea id="collegeDetails" placeholder="Selected colleges will appear here..." readonly></textarea>
-        </div>
+    <!-- Left side: Buttons -->
+    <div class="container buttons-list">
+        <button data-value="College 1">College 1</button>
+        <button data-value="College 2">College 2</button>
+        <button data-value="College 3">College 3</button>
+        <button data-value="College 4">College 4</button>
+        <button data-value="College 5">College 5</button>
     </div>
 
-    <button id="submitBtn" onclick="submitResponse()">Submit</button>
+    <!-- Right side: Selected Colleges -->
+    <div class="container selected-list">
+        <h3>Selected Colleges:</h3>
+        <ul id="selected-colleges-list"></ul>
+    </div>
 
     <script>
+        const buttons = document.querySelectorAll('.buttons-list button');
+        const selectedList = document.getElementById('selected-colleges-list');
         let selectedColleges = [];
 
-        // Function to select and display the college name in the order they are selected
-        function selectCollege(college) {
-            // Add the selected college to the array
-            selectedColleges.push(college);
+        // Event listener for button clicks
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const collegeName = button.getAttribute('data-value');
 
-            // Display the selected colleges in the text area
-            document.getElementById('collegeDetails').value = `Selected Colleges (in order):\n` + selectedColleges.join('\n');
+                // Add the college name to the selected list if not already added
+                if (!selectedColleges.includes(collegeName)) {
+                    selectedColleges.push(collegeName);
+                    updateSelectedList();
+                }
+            });
+        });
+
+        // Function to update the list on the right side
+        function updateSelectedList() {
+            selectedList.innerHTML = ''; // Clear the list
+            selectedColleges.forEach((college, index) => {
+                const li = document.createElement('li');
+                li.textContent = college;
+                li.draggable = true; // Make list item draggable
+                li.dataset.index = index; // Store index for reordering
+                li.addEventListener('dragstart', handleDragStart);
+                li.addEventListener('dragover', handleDragOver);
+                li.addEventListener('drop', handleDrop);
+                selectedList.appendChild(li);
+            });
         }
 
-        // Function to submit the response
-        function submitResponse() {
-            // Get the ordered list of selected colleges
-            const collegeDetails = selectedColleges.join(', ');
-            alert('You submitted the following order of colleges: ' + collegeDetails);
+        // Drag and Drop Handlers
+        let draggedItemIndex;
 
-            // You can add code here to send this data to a server using fetch() or AJAX
+        function handleDragStart(event) {
+            draggedItemIndex = event.target.dataset.index;
+            event.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault(); // Necessary to allow drop
+        }
+
+        function handleDrop(event) {
+            const droppedItemIndex = event.target.dataset.index;
+            reorderList(draggedItemIndex, droppedItemIndex);
+        }
+
+        function reorderList(fromIndex, toIndex) {
+            // Reorder the selected colleges array
+            const movedItem = selectedColleges.splice(fromIndex, 1)[0];
+            selectedColleges.splice(toIndex, 0, movedItem);
+
+            // Update the list display
+            updateSelectedList();
         }
     </script>
 
