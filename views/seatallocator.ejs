@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reorderable List</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 45%;
+        }
+        /* CSS */
+        
+        .button-86 {
+            all: unset;
+            width: 100px;
+            height: 30px;
+            font-size: 16px;
+            background: transparent;
+            border: none;
+            position: relative;
+            color: #f0f0f0;
+            cursor: pointer;
+            z-index: 1;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+        
+        .button-86::after,
+        .button-86::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            z-index: -99999;
+            transition: all .4s;
+        }
+        
+        .button-86::before {
+            transform: translate(0%, 0%);
+            width: 100%;
+            height: 100%;
+            background: #28282d;
+            border-radius: 10px;
+        }
+        
+        .button-86::after {
+            transform: translate(10px, 10px);
+            width: 35px;
+            height: 35px;
+            background: #ffffff15;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 50px;
+        }
+        
+        .button-86:hover::before {
+            transform: translate(5%, 20%);
+            width: 110%;
+            height: 110%;
+        }
+        
+        .button-86:hover::after {
+            border-radius: 10px;
+            transform: translate(0, 0);
+            width: 100%;
+            height: 100%;
+        }
+        
+        .button-86:active::after {
+            transition: 0s;
+            transform: translate(0, 5%);
+        }
+        
+        .buttons-list {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .buttons-list button {
+            margin: 10px 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        .selected-list {
+            border: 1px solid black;
+            padding: 20px;
+            min-height: 300px;
+            background-color: #f9f9f9;
+        }
+        
+        .selected-list li {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: move;
+            list-style-type: none;
+        }
+        
+        #seat-allocator {
+            display: inline-block;
+        }
+        
+        .button-85 {
+            padding: 0.6em 2em;
+            border: none;
+            outline: none;
+            color: rgb(255, 255, 255);
+            background: #111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+        
+        .button-85:before {
+            content: "";
+            background: linear-gradient( 45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing-button-85 20s linear infinite;
+            transition: opacity 0.3s ease-in-out;
+            border-radius: 10px;
+        }
+        
+        @keyframes glowing-button-85 {
+            0% {
+                background-position: 0 0;
+            }
+            50% {
+                background-position: 400% 0;
+            }
+            100% {
+                background-position: 0 0;
+            }
+        }
+        
+        .button-85:after {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #222;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Left side: Buttons -->
+    <div id="seat-allocator">Logged in as:
+        <p id="userID_location">
+            <%= user_id %>
+        </p>
+    </div>
+    <div class="container buttons-list">
+        <button data-value="College 1" class="button-86">College 1</button>
+        <button data-value="College 2" class="button-86">College 2</button>
+        <button data-value="College 3" class="button-86">College 3</button>
+        <button data-value="College 4" class="button-86">College 4</button>
+        <button data-value="College 5" class="button-86">College 5</button>
+    </div>
+
+    <!-- Right side: Selected Colleges -->
+    <div class="container selected-list">
+        <h3>Selected Colleges:</h3>
+        <ul id="selected-colleges-list"></ul>
+        <button id="submit-btn" class="button-85">Submit Order</button>
+        <!-- Submit Button -->
+    </div>
+
+    <script>
+        const user_id = document.getElementById("userID_location").textContent;
+        const buttons = document.querySelectorAll('.buttons-list button');
+        const selectedList = document.getElementById('selected-colleges-list');
+        const submitButton = document.getElementById('submit-btn');
+        let selectedColleges = [];
+
+        // Event listener for button clicks
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const collegeName = button.getAttribute('data-value');
+
+                // Add the college name to the selected list if not already added
+                if (!selectedColleges.includes(collegeName)) {
+                    selectedColleges.push(collegeName);
+                    updateSelectedList();
+                }
+            });
+        });
+
+        // Function to update the list on the right side
+        function updateSelectedList() {
+            selectedList.innerHTML = ''; // Clear the list
+            selectedColleges.forEach((college, index) => {
+                const li = document.createElement('li');
+                li.textContent = college;
+                li.draggable = true; // Make list item draggable
+                li.dataset.index = index; // Store index for reordering
+                li.addEventListener('dragstart', handleDragStart);
+                li.addEventListener('dragover', handleDragOver);
+                li.addEventListener('drop', handleDrop);
+                selectedList.appendChild(li);
+            });
+        }
+
+        // Drag and Drop Handlers
+        let draggedItemIndex;
+
+        function handleDragStart(event) {
+            draggedItemIndex = event.target.dataset.index;
+            event.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault(); // Necessary to allow drop
+        }
+
+        function handleDrop(event) {
+            const droppedItemIndex = event.target.dataset.index;
+            reorderList(draggedItemIndex, droppedItemIndex);
+        }
+
+        function reorderList(fromIndex, toIndex) {
+            // Reorder the selected colleges array
+            const movedItem = selectedColleges.splice(fromIndex, 1)[0];
+            selectedColleges.splice(toIndex, 0, movedItem);
+
+            // Update the list display
+            updateSelectedList();
+        }
+
+        // Event listener for submit button to send data to the server
+        submitButton.addEventListener('click', () => {
+            // Send the selected colleges to the server
+            fetch('/save-colleges-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        colleges: selectedColleges,
+                        user_id: user_id
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Colleges order saved successfully!');
+                    } else {
+                        alert('Failed to save order');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+</body>
+
+</html>
