@@ -21,8 +21,12 @@
             </div>
             <div class="user_id">
                 <input type="text" class="user_id" name="user_id" id="user_id" placeholder="User ID" required>
-                <input type="number" class="rank" name="rank" placeholder="rank" required>
-                <p id="user-availability" name="user-aval"> </p>
+                <input type="number" class="rank" name="rank" placeholder="rank" id="rank" required>
+                <div class="aval-container">
+                    <p id="user-availability" class="available" name="user-aval"> .</p>
+                    <p id="rank-availability" class="available" name="ranl-aval"> .</p>
+                </div>
+
             </div>
             <div class="password_setup">
                 <input type="password" class="create_password" name="password" placeholder="enter a password" id="password" required>

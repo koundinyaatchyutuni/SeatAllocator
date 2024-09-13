@@ -28,7 +28,7 @@
                <line x1="20" y1="20%" x2="95%" y2="20%" stroke="lightgrey" stroke-width="1"/>
             </svg>
         <!-- </div> -->
-        <form action="/signuppage" method="post">
+        <form action="/sign_up" method="get">
             <input type="submit" value="Sign up" class="sign_up-button" id="sign_up">
         </form>
         <script>
@@ -41,9 +41,6 @@
             icon.addEventListener('mouseout', function() {
                 pass.type = 'password';
                 icon.src = "hidden.png";
-            });
-            document.getElementById('sign_up').addEventListener('click', function() {
-                window.location.href = 'sign_up.html'; // Replace with the URL of the new page
             });
         </script>
     </div>

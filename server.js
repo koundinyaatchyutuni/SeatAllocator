@@ -33,7 +33,7 @@ client.connect();
 const database = client.db('User_data');
 const collection = database.collection('Uinfo');
 // console.log("Connected to MongoDB!");
-
+const admin_check = database.collection('Uid');
 // Login route
 app.post('/login', async(req, res) => {
 
@@ -43,23 +43,32 @@ app.post('/login', async(req, res) => {
     };
 
     try {
-        console.log("type of login userid");
-        console.log(typeof data.user_id);
-        const user = await collection.findOne({ 'user_id': data.user_id });
-        if (!user) {
-            return res.status(400).json({ msg: 'Invalid user id' });
+        if (data.user_id == "Admin@1") {
+            const user = await admin_check.findOne({ 'user_id': data.user_id });
+            if (!user) {
+                return res.status(400).json({ msg: 'Invalid user id' });
+            }
+            // Validate password
+            const isValid = await bcrypt.compare(data.password, user.password);
+            if (!isValid) {
+                return res.status(400).json({ msg: 'Invalid credentials' });
+            }
+            res.redirect('/submit');
+        } else {
+            const user = await collection.findOne({ 'user_id': data.user_id });
+            if (!user) {
+                return res.status(400).json({ msg: 'Invalid user id' });
+            }
+
+            // Validate password
+            const isValid = await bcrypt.compare(data.password, user.password);
+            if (!isValid) {
+                return res.status(400).json({ msg: 'Invalid credentials' });
+            }
+
+            req.session.user_id = data.user_id;
+            res.redirect('/seatallocator');
         }
-
-        // Validate password
-        const isValid = await bcrypt.compare(data.password, user.password);
-        if (!isValid) {
-            return res.status(400).json({ msg: 'Invalid credentials' });
-        }
-
-        // Store user_id in the session
-        req.session.user_id = data.user_id;
-
-        res.redirect('/seatallocator');
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).json({ error: "Internal server error" });
@@ -72,6 +81,21 @@ app.post('/is_unique_userid', async(req, res) => {
 
         const uid = req.body.user_id;
         const user = await collection.findOne({ 'user_id': uid });
+        if (!user) {
+            res.json({ available: true });
+        } else {
+            res.json({ available: false });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+app.post('/is_unique_rank', async(req, res) => {
+    try {
+        const rank = req.body.rank;
+        const user = await collection.findOne({ 'rank': rank });
         if (!user) {
             res.json({ available: true });
         } else {
@@ -101,18 +125,26 @@ app.post('/save-colleges-order', async(req, res) => {
         }, { strict: false }
     );
     if (result.matchedCount > 0) {
-        console.log(`Successfully updated user: ${userId }`);
+        return res.json({ success: true, message: 'colleges selected' });
     } else {
-        console.log(`No user found with user_id: ${userId }`);
+        return res.json({ success: false, message: 'No colleges selected' });
     }
 
+});
+app.post('/main-cal', async(req, res) => {
+    try {
+        // Retrieve only the specified fields: user_id, colleges, and rank
+        console.log("entered main-cal!!");
+        const data = await collection.find({}).sort({ rank: 1 }) // Specify fields to return
+        console.log(data);
+        return res.json(data); // Send the filtered data back as a JSON response
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 });
 // Sign-up route
 app.post('/submit-form', async(req, res) => {
     try {
-        client.connect();
-        const database = client.db('User_data');
-        const collection = database.collection('Uinfo');
         const dataToInsert = {
             user_id: req.body.user_id,
             password: req.body.password,
@@ -125,11 +157,15 @@ app.post('/submit-form', async(req, res) => {
         // Hash password before saving to database
         const salt = await bcrypt.genSalt(10);
         dataToInsert.password = await bcrypt.hash(dataToInsert.password, salt);
-
+        if (dataToInsert.user_id == "Admin@1") {
+            const result = await admin_check.insertOne(dataToInsert);
+            console.log('Form data inserted:', result);
+        }
         // Insert data into MongoDB
-        const result = await collection.insertOne(dataToInsert);
-        console.log('Form data inserted:', result);
-
+        else {
+            const result = await collection.insertOne(dataToInsert);
+            console.log('Form data inserted:', result);
+        }
         res.redirect('/');
     } catch (error) {
         console.error('Error inserting data:', error);
@@ -141,9 +177,11 @@ app.post('/submit-form', async(req, res) => {
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'main.html'));
 });
-
+app.get('/submit', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'submit.html'));
+})
 app.get('/sign_up', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'sign_up.html'));
+    res.render('sign_up');
 });
 
 // Seat allocator route

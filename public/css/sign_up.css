@@ -89,7 +89,7 @@ div.main_container {
     color: white;
 }
 
-#user-availability {
+.available {
     margin: 0px;
     width: 340px;
     color: #35d97f;

@@ -4,12 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reorderable List</title>
+    <title>Seat Allocate</title>
     <style>
         body {
+            display: grid;
+            padding: 5px;
+        }
+        
+        #selected-colleges-list {
+            margin-bottom: 5px;
+        }
+        
+        .main-container {
             display: flex;
             justify-content: space-between;
-            padding: 20px;
+            align-items: center;
         }
         
         .container {
@@ -87,6 +96,8 @@
         .buttons-list {
             display: flex;
             flex-direction: column;
+            padding: 2px;
+            margin-top: 7px;
         }
         
         .buttons-list button {
@@ -112,7 +123,11 @@
         }
         
         #seat-allocator {
-            display: inline-block;
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            background-color: black;
+            color: whitesmoke;
         }
         
         .button-85 {
@@ -170,33 +185,100 @@
             top: 0;
             border-radius: 10px;
         }
+        /* CSS */
+        
+        .button-58 {
+            background-color: #06f;
+            border: 2px solid #06f;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            display: block;
+            fill: #000;
+            font-family: Inter, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            height: 48px;
+            letter-spacing: -.8px;
+            line-height: 24px;
+            min-width: 140px;
+            outline: 0;
+            padding: 0 17px;
+            margin-bottom: 2px;
+            text-align: center;
+            text-decoration: none;
+            transition: all .3s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+        
+        .button-58:focus {
+            color: #171e29;
+        }
+        
+        .button-58:hover {
+            background-color: #3385ff;
+            border-color: #3385ff;
+            fill: #06f;
+        }
+        
+        .button-58:active {
+            background-color: #3385ff;
+            border-color: #3385ff;
+            fill: #06f;
+        }
+        
+        @media (min-width: 768px) {
+            .button-58 {
+                min-width: 170px;
+            }
+        }
+        
+        #userID-location {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #responce {
+            color: red;
+            font-size: medium;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-weight: 300;
+        }
     </style>
 </head>
 
 <body>
 
     <!-- Left side: Buttons -->
-    <div id="seat-allocator">Logged in as:
+    <div id="seat-allocator">
         <p id="userID_location">
             <%= user_id %>
         </p>
     </div>
-    <div class="container buttons-list">
-        <button data-value="College 1" class="button-86">College 1</button>
-        <button data-value="College 2" class="button-86">College 2</button>
-        <button data-value="College 3" class="button-86">College 3</button>
-        <button data-value="College 4" class="button-86">College 4</button>
-        <button data-value="College 5" class="button-86">College 5</button>
+    <div class="main-container">
+        <div class="container buttons-list">
+            <button data-value="College 1" class="button-86">College 1</button>
+            <button data-value="College 2" class="button-86">College 2</button>
+            <button data-value="College 3" class="button-86">College 3</button>
+            <button data-value="College 4" class="button-86">College 4</button>
+            <button data-value="College 5" class="button-86">College 5</button>
+        </div>
+
+        <!-- Right side: Selected Colleges -->
+        <div class="container selected-list">
+            <h3>Selected Colleges:</h3>
+            <div id="selected-colleges-list"></div>
+            <button id="submit-btn" class="button-85">Submit Order</button>
+            <!-- Submit Button -->
+        </div>
     </div>
 
-    <!-- Right side: Selected Colleges -->
-    <div class="container selected-list">
-        <h3>Selected Colleges:</h3>
-        <ul id="selected-colleges-list"></ul>
-        <button id="submit-btn" class="button-85">Submit Order</button>
-        <!-- Submit Button -->
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <p id="responce">hellloo im here</p>
     </div>
-
     <script>
         const user_id = document.getElementById("userID_location").textContent;
         const buttons = document.querySelectorAll('.buttons-list button');
@@ -221,7 +303,8 @@
         function updateSelectedList() {
             selectedList.innerHTML = ''; // Clear the list
             selectedColleges.forEach((college, index) => {
-                const li = document.createElement('li');
+                const li = document.createElement('button');
+                li.className = 'button-58';
                 li.textContent = college;
                 li.draggable = true; // Make list item draggable
                 li.dataset.index = index; // Store index for reordering
@@ -274,9 +357,11 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert('Colleges order saved successfully!');
+                        const signal = document.getElementById("responce");
+                        signal.textContent = "successfully collages order is saved !!!";
                     } else {
-                        alert('Failed to save order');
+                        const signal = document.getElementById("responce");
+                        signal.textContent = "alert collages order is not saved !!!";
                     }
                 })
                 .catch(error => console.error('Error:', error));
