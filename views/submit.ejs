@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1-Minute Countdown</title>
+    <style>
+        #countdown {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        #submitBtn {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: gray;
+            border: none;
+            color: white;
+            cursor: not-allowed;
+        }
+        
+        #submitBtn.enabled {
+            background-color: green;
+            cursor: pointer;
+        }
+        /* Style for the user list */
+        
+        #userList {
+            margin-top: 20px;
+        }
+        
+        .user {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        
+        .user h3 {
+            margin: 0;
+        }
+        
+        .colleges {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="countdown">Loading countdown...</div>
+    <button type="button" id="submitBtn" disabled>Submit</button>
+
+    <!-- Container to display users and their corresponding colleges -->
+    <div id="userList"></div>
+
+    <script>
+        let timer; // Declare the timer globally to clear it when countdown ends.
+        const countdownDuration = 1 * 60 * 1000;
+        const submitBtn = document.getElementById("submitBtn");
+
+        submitBtn.addEventListener('click', async function() {
+            console.log("Submit button clicked!");
+
+            // Fetch data from the server
+            try {
+                const resp = await fetch('/main-cal', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!resp.ok) {
+                    console.error("Error in fetching data:", resp.statusText);
+                    return;
+                }
+
+                const data_info = await resp.json(); // Parse JSON response
+                const data = data_info.information;
+
+                console.log("Fetched data:", data);
+
+                // Clear any previous content in the user list
+                const userList = document.getElementById("userList");
+                userList.innerHTML = '';
+
+                // Loop through the data (array of users) and display on the page
+                data.forEach(user => {
+                    // Create a div for each user
+                    const userDiv = document.createElement('div');
+                    userDiv.classList.add('user');
+
+                    // Add user ID and rank
+                    const userHeader = document.createElement('h3');
+                    userHeader.textContent = `User ID: ${user.user_id}, Rank: ${user.rank}`;
+                    userDiv.appendChild(userHeader);
+
+                    // Add user's colleges (if available)
+                    if (user.collages_order && user.collages_order.length > 0) {
+                        const collegesList = document.createElement('ul');
+                        collegesList.classList.add('colleges');
+                        user.collages_order.forEach(college => {
+                            const collegeItem = document.createElement('li');
+                            collegeItem.textContent = college;
+                            collegesList.appendChild(collegeItem);
+                        });
+                        userDiv.appendChild(collegesList);
+                    } else {
+                        // Handle case where no colleges are available
+                        const noColleges = document.createElement('p');
+                        noColleges.textContent = 'No colleges available';
+                        userDiv.appendChild(noColleges);
+                    }
+
+                    // Append user div to the main user list container
+                    userList.appendChild(userDiv);
+                });
+
+            } catch (err) {
+                console.error("Error occurred during fetch:", err);
+            }
+        });
+
+        // Countdown and enabling the submit button
+        function calculateRemainingTime(endTime) {
+            const now = new Date().getTime();
+            return endTime - now;
+        }
+
+        function updateCountdown() {
+            const endTime = localStorage.getItem('countdownEndTime');
+            if (endTime) {
+                const remainingTime = calculateRemainingTime(endTime);
+
+                if (remainingTime > 0) {
+                    const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+                    document.getElementById("countdown").textContent = `Time left: ${minutes}m ${seconds}s`;
+                } else {
+                    // When countdown ends, enable the submit button
+                    const submitBtn = document.getElementById("submitBtn");
+                    submitBtn.disabled = false;
+                    submitBtn.classList.add("enabled");
+                    submitBtn.textContent = "Submit (Enabled)";
+                    clearInterval(timer); // Clear the interval once the countdown finishes
+                }
+            }
+        }
+
+        function startCountdown() {
+            // 1 minute
+
+            // Clear any previous countdown
+            localStorage.removeItem('countdownEndTime');
+
+            let endTime = localStorage.getItem('countdownEndTime');
+            if (!endTime) {
+                const now = new Date().getTime();
+                endTime = now + countdownDuration;
+                localStorage.setItem('countdownEndTime', endTime);
+            }
+
+            updateCountdown();
+            timer = setInterval(updateCountdown, 1000); // Start updating countdown every second
+        }
+
+        window.onload = startCountdown; // Start countdown on page load
+    </script>
+
+</body>
+
+</html>

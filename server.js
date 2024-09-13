@@ -135,10 +135,11 @@ app.post('/main-cal', async(req, res) => {
     try {
         // Retrieve only the specified fields: user_id, colleges, and rank
         console.log("entered main-cal!!");
-        const data = await collection.find({}).sort({ rank: 1 }) // Specify fields to return
-        console.log(data);
-        return res.json(data); // Send the filtered data back as a JSON response
+        const report = await collection.find({}, { projection: { user_id: 1, collages_order: 1, rank: 1 } }).sort({ rank: 1 }).toArray();
+        console.log(report);
+        return res.json({ information: report }); // Send the filtered data back as a JSON response
     } catch (err) {
+        console.log("erroor occured");
         res.status(500).json({ message: err.message });
     }
 });
@@ -178,7 +179,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'main.html'));
 });
 app.get('/submit', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'submit.html'));
+    res.render('submit');
 })
 app.get('/sign_up', (req, res) => {
     res.render('sign_up');
