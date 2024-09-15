@@ -67,7 +67,7 @@ app.post('/login', async(req, res) => {
             }
 
             req.session.user_id = data.user_id;
-            res.redirect('/seatallocator');
+            res.redirect('/middle');
         }
     } catch (error) {
         console.error('Login error:', error);
@@ -184,14 +184,19 @@ app.get('/submit', (req, res) => {
 app.get('/sign_up', (req, res) => {
     res.render('sign_up');
 });
-
-// Seat allocator route
-app.get('/seatallocator', (req, res) => {
+app.get('/middle', (req, res) => {
     if (!req.session.user_id) {
         return res.redirect('/'); // Redirect to homepage if not logged in
     }
 
     // You can now use req.session.user_id to fetch user-specific data
+    res.render('middle', { user_id: req.session.user_id });
+});
+// Seat allocator route
+app.get('/seatallocator', (req, res) => {
+    if (!req.session.user_id) {
+        res.redirect('/');
+    }
     res.render('seatallocator', { user_id: req.session.user_id });
 });
 

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>middle</title>
+    <style>
+        .rainbow-glow {
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.7), 0 0 30px rgba(255, 0, 255, 0.7), 0 0 40px rgba(255, 0, 255, 0.7), 0 0 50px rgba(255, 0, 255, 0.7);
+            animation: rainbow 2s infinite;
+        }
+        
+        @keyframes rainbow {
+            0% {
+                text-shadow: 0 0 5px rgba(255, 0, 0, 0.7), 0 0 10px rgba(255, 0, 0, 0.7), 0 0 20px rgba(255, 165, 0, 0.7), 0 0 30px rgba(255, 165, 0, 0.7), 0 0 40px rgba(255, 165, 0, 0.7), 0 0 50px rgba(255, 165, 0, 0.7);
+            }
+            50% {
+                text-shadow: 0 0 5px rgba(0, 255, 0, 0.7), 0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 0, 255, 0.7), 0 0 30px rgba(0, 0, 255, 0.7), 0 0 40px rgba(0, 0, 255, 0.7), 0 0 50px rgba(0, 0, 255, 0.7);
+            }
+            100% {
+                text-shadow: 0 0 5px rgba(75, 0, 130, 0.7), 0 0 10px rgba(75, 0, 130, 0.7), 0 0 20px rgba(238, 130, 238, 0.7), 0 0 30px rgba(238, 130, 238, 0.7), 0 0 40px rgba(238, 130, 238, 0.7), 0 0 50px rgba(238, 130, 238, 0.7);
+            }
+        }
+        
+        .button-85 {
+            padding: 0.6em 2em;
+            border: none;
+            outline: none;
+            color: rgb(255, 255, 255);
+            background: #111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+        
+        .button-85:before {
+            content: "";
+            background: linear-gradient( 45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing-button-85 20s linear infinite;
+            transition: opacity 0.3s ease-in-out;
+            border-radius: 10px;
+        }
+        
+        @keyframes glowing-button-85 {
+            0% {
+                background-position: 0 0;
+            }
+            50% {
+                background-position: 400% 0;
+            }
+            100% {
+                background-position: 0 0;
+            }
+        }
+        
+        .button-85:after {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #222;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+        
+        .results {
+            margin-right: 100px;
+        }
+        
+        body {
+            display: grid;
+            place-items: center;
+            background-image: url("background3.jpg");
+            background-size: cover;
+            /* Scale the image to cover the entire background */
+            background-position: center;
+            /* Center the background image */
+            background-repeat: no-repeat;
+            /* Prevent the image from repeating */
+            height: 100vh;
+            /* Ensure the background covers the full viewport height */
+            margin: 0;
+        }
+        
+        .results:hover {
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-user_id">
+        <p id="display_id" style="display: flex;justify-content:center;align-items:center;color:black">
+            <%= user_id %>
+        </p>
+    </div>
+    <div class="notices">
+        <p class="rainbow-glow"> Results will be available after 6:00 pm today!!!</p>
+    </div>
+    <div class="container-button" style="display: flex; padding:5px">
+        <button type="button" class="button-85 results" disabled>results</button>
+        <button type="button" class="button-85" id="collages_order">select collages</button>
+    </div>
+    <div class="container-results">
+        <p id="show_results" class="show_result"></p>
+    </div>
+    <script>
+        const collage = document.getElementById("collages_order");
+        const userId = document.getElementById("display_id");
+        collage.addEventListener('click', () => {
+            fetch('/seatallocator', {
+                method: 'GET'
+            });
+            window.location = 'seatallocator';
+        });
+    </script>
+</body>
+
+</html>
