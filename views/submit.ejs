@@ -79,13 +79,17 @@
 
                 const data_info = await resp.json(); // Parse JSON response
                 const data = data_info.information;
-
-                console.log("Fetched data:", data);
-
-                // Clear any previous content in the user list
+                const vacancy_info = data_info.vacancy;
                 const userList = document.getElementById("userList");
                 userList.innerHTML = '';
-
+                vacancy_info.forEach(vacancy => {
+                    const collages_info_div = document.createElement('div');
+                    const collageHead = document.createElement('h3');
+                    collageHead.textContent = `collage_1: ${vacancy.collage_1}, collage_2: ${vacancy.collage_2}, collage_3: ${vacancy.collage_3}, collage_4: ${vacancy.collage_4}, collage_5: ${vacancy.collage_5}`;
+                    collages_info_div.appendChild(collageHead);
+                    userList.appendChild(collages_info_div);
+                });
+                // Clear any previous content in the user list
                 // Loop through the data (array of users) and display on the page
                 data.forEach(user => {
                     // Create a div for each user

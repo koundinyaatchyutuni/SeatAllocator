@@ -32,6 +32,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect();
 const database = client.db('User_data');
 const collection = database.collection('Uinfo');
+const collages = database.collection('collages');
 // console.log("Connected to MongoDB!");
 const admin_check = database.collection('Uid');
 // Login route
@@ -136,8 +137,10 @@ app.post('/main-cal', async(req, res) => {
         // Retrieve only the specified fields: user_id, colleges, and rank
         console.log("entered main-cal!!");
         const report = await collection.find({}, { projection: { user_id: 1, collages_order: 1, rank: 1 } }).sort({ rank: 1 }).toArray();
+        const vacencies = await collages.find({}).toArray();
         console.log(report);
-        return res.json({ information: report }); // Send the filtered data back as a JSON response
+        console.log(vacencies);
+        return res.json({ information: report, vacancy: vacencies }); // Send the filtered data back as a JSON response
     } catch (err) {
         console.log("erroor occured");
         res.status(500).json({ message: err.message });

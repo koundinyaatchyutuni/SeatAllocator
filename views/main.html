@@ -17,12 +17,12 @@
 
             <!-- <label for="password">password</label> -->
             <div class="password-input"><input type="password" class="password" name="password" placeholder="enter password" id="input-password">
-                <img src="views\hidden.png" alt="show" class="show-icon" id="show-icon"></div>
+                <img src="/images/hidden.png" alt="show" class="show-icon" id="show-icon"></div>
 
             <!-- <a href="seatallocator.html" class="login-button">seat</a> -->
             <input type="submit" class="login-button" value="login">
         </form>
-        <a href="Avatar.jpg" class="links">Forgotten password?</a>
+        <a href="/images/Avatar.jpg" class="links">Forgotten password?</a>
         <!-- <div> -->
         <svg width="100%" height="1%" class="line">
                <line x1="20" y1="20%" x2="95%" y2="20%" stroke="lightgrey" stroke-width="1"/>
@@ -35,12 +35,12 @@
             var icon = document.getElementById("show-icon");
             var pass = document.getElementById("input-password");
             icon.addEventListener('mouseover', function() {
-                icon.src = "view.png";
+                icon.src = "/images/view.png";
                 pass.type = 'text';
             });
             icon.addEventListener('mouseout', function() {
                 pass.type = 'password';
-                icon.src = "hidden.png";
+                icon.src = "/images/hidden.png";
             });
         </script>
     </div>
