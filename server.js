@@ -111,15 +111,11 @@ app.post('/save-colleges-order', async(req, res) => {
 
     const selectedColleges = req.body.colleges; // Get the submitted list of colleges
     const userId = String(req.body.user_id).trim();
-    console.log("userid from seatallocator type");
-    console.log(userId);
     if (!selectedColleges || selectedColleges.length === 0) {
         return res.json({ success: false, message: 'No colleges selected' });
     }
 
     // Insert the order into MongoDB
-    const test = await collection.findOne({ 'user_id': userId });
-    console.log(test);
     const result = await collection.updateOne({ 'user_id': userId }, // Match condition
         {
             $set: { 'collages_order': selectedColleges } // Add the new field or update the value of an existing field
@@ -146,7 +142,32 @@ app.post('/main-cal', async(req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-// Sign-up route
+// uploading results for students
+app.post('/results-upload', async(req, res) => {
+        try {
+            const result = String(req.body.result).trim();
+            const user_id = String(req.body.userId).trim();
+            console.log("enterd results-upload");
+            console.log(result);
+            console.log(user_id);
+            const test = await collection.updateOne({ 'user_id': user_id }, // Match condition
+                {
+                    $set: { 'allocated_collage': result } // Add the new field or update the value of an existing field
+                }, { strict: false }
+            );
+            if (test.matchedCount > 0) {
+                console.log("succesfull");
+                res.json({ success: true, message: 'uploaded allocated collage' });
+            } else {
+                console.log("unsuccesful");
+                res.json({ success: false, message: 'unable to upload !!!' });
+            }
+        } catch (err) {
+            console.log("erroor occured");
+            res.status(500).json({ message: err.message });
+        }
+    })
+    // Sign-up route
 app.post('/submit-form', async(req, res) => {
     try {
         const dataToInsert = {

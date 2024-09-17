@@ -116,6 +116,16 @@
                         userHeader.textContent = `User ID: ${user.user_id}, Rank: ${user.rank}, assigned_collage: ${assign}`;
                         userDiv.appendChild(userHeader);
                         userList.appendChild(userDiv);
+                        fetch('/results-upload', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                userId: user.user_id,
+                                result: assign
+                            })
+                        });
                     }
                 });
                 const collages_info_div = document.createElement('div');
