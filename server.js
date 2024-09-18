@@ -144,27 +144,52 @@ app.post('/main-cal', async(req, res) => {
 });
 // uploading results for students
 app.post('/results-upload', async(req, res) => {
+    try {
+        const result = String(req.body.result).trim();
+        const user_id = String(req.body.userId).trim();
+        console.log("enterd results-upload");
+        console.log(result);
+        console.log(user_id);
+        const test = await collection.updateOne({ 'user_id': user_id }, // Match condition
+            {
+                $set: { 'allocated_collage': result } // Add the new field or update the value of an existing field
+            }, { strict: false }
+        );
+        if (test.matchedCount > 0) {
+            console.log("succesfull");
+            res.json({ success: true, message: 'uploaded allocated collage' });
+        } else {
+            console.log("unsuccesful");
+            res.json({ success: false, message: 'unable to upload !!!' });
+        }
+    } catch (err) {
+        console.log("erroor occured");
+        res.status(500).json({ message: err.message });
+    }
+})
+app.post('/update-vacancies', async(req, res) => {
         try {
-            const result = String(req.body.result).trim();
-            const user_id = String(req.body.userId).trim();
-            console.log("enterd results-upload");
-            console.log(result);
-            console.log(user_id);
-            const test = await collection.updateOne({ 'user_id': user_id }, // Match condition
-                {
-                    $set: { 'allocated_collage': result } // Add the new field or update the value of an existing field
-                }, { strict: false }
-            );
-            if (test.matchedCount > 0) {
-                console.log("succesfull");
-                res.json({ success: true, message: 'uploaded allocated collage' });
-            } else {
-                console.log("unsuccesful");
-                res.json({ success: false, message: 'unable to upload !!!' });
+            const collageId = req.body.new_vacancy;
+            delete collageId._id;
+            const query = { uni: 1 };
+            // {"_id":{"$oid":"66e7e97eefdf987fc76194be"}}
+            console.log("collage id:", collageId);
+            for (let key in collageId) {
+                console.log(key);
+                const update = {
+                    $set: {
+                        [key]: collageId[key]
+                    }
+                };
+                await collages.updateOne(query, update);
             }
+            // Your specific document _id
+
+
         } catch (err) {
-            console.log("erroor occured");
-            res.status(500).json({ message: err.message });
+            console.log("failure while updating the vacancies::");
+            console.error(err);
+            res.json({ success: false });
         }
     })
     // Sign-up route

@@ -133,6 +133,15 @@
                 collageHead.textContent = `collage_1: ${dup.collage_1}, collage_2: ${dup.collage_2}, collage_3: ${dup.collage_3}, collage_4: ${dup.collage_4}, collage_5: ${dup.collage_5}`;
                 collages_info_div.appendChild(collageHead);
                 userList.appendChild(collages_info_div);
+                fetch('/update-vacancies', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        new_vacancy: dup
+                    })
+                });
                 /*data.forEach(user => {
                     // Create a div for each user
                     const userDiv = document.createElement('div');
