@@ -115,24 +115,16 @@
         </p>
     </div>
     <div class="notices">
-        <p class="rainbow-glow"> Results will be available after 6:00 pm today!!!</p>
+        <p class="rainbow-glow" id="notice"> Results will be available after 6:00 pm today!!!</p>
     </div>
     <div class="container-button" style="display: flex; padding:5px">
-        <button type="button" class="button-85 results" disabled>results</button>
+        <button type="button" class="button-85 results" id="result_button" disabled>results</button>
         <button type="button" class="button-85" id="collages_order">select collages</button>
     </div>
     <div class="container-results">
-        <p id="show_results" class="show_result"></p>
+        <p id="show_results" class="rainbow-glow"></p>
     </div>
-    <script>
-        const collage = document.getElementById("collages_order");
-        const userId = document.getElementById("display_id");
-        collage.addEventListener('click', () => {
-            fetch('/seatallocator', {
-                method: 'GET'
-            });
-            window.location = 'seatallocator';
-        });
+    <script src="js\middle.js">
     </script>
 </body>
 

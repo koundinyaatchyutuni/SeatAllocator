@@ -142,6 +142,43 @@ app.post('/main-cal', async(req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+// checking if result is available for result button enabling
+app.post('/results-aval', async(req, res) => {
+    try {
+        const userId = String(req.body.user_id).trim();
+        const ackn = await collection.findOne({ user_id: userId });
+        // console.log(typeof ackn);
+        // console.log(ackn);
+        // console.log(userId);
+        if (ackn.allocated_collage) {
+            console.log('The key "result" exists in ackn.');
+            res.json({ available: true });
+        } else {
+            console.log('The key "result" does not exist in ackn.');
+            res.json({ available: false });
+        }
+    } catch (err) {
+        console.error(err);
+        res.json({ available: false });
+    }
+});
+//fetching results fro user
+app.post('/get-result', async(req, res) => {
+    try {
+        const userId = String(req.body.user_id).trim();
+        const ackn = await collection.findOne({ user_id: userId });
+        if (ackn.allocated_collage) {
+            // console.log('The key "result" exists in ackn.');
+            res.json({ available: true, colg: ackn.allocated_collage });
+        } else {
+            // console.log('The key "result" does not exist in ackn.');
+            res.json({ available: false });
+        }
+    } catch (err) {
+        console.error(err);
+        res.json({ available: false });
+    }
+});
 // uploading results for students
 app.post('/results-upload', async(req, res) => {
     try {
