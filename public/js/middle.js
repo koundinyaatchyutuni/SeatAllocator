@@ -32,6 +32,11 @@ window.onload = async function() {
 const collage = document.getElementById("collages_order");
 const result_button = document.getElementById("result_button");
 const userId = document.getElementById("display_id").textContent;
+const logout = document.getElementById("log_out");
+logout.addEventListener('click', function() {
+    // fetch('/');
+    window.location('main');
+});
 result_button.addEventListener('click', async() => {
     const resp = await fetch('get-result', {
         method: 'POST',
