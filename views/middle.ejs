@@ -105,14 +105,36 @@
         .results:hover {
             cursor: not-allowed;
         }
+        
+        .logout {
+            background-color: black;
+            color: white;
+            border-radius: 10px;
+            border: 0px;
+            width: 100px;
+            height: 30px;
+        }
+        
+        .logout:hover {
+            opacity: 0.7;
+            cursor: pointer;
+        }
+        
+        .container-user_id {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 
 <body>
     <div class="container-user_id">
-        <p id="display_id" style="display: flex;justify-content:center;align-items:center;color:black">
+        <p id="display_id" style="display: flex;justify-content:center;color:black;margin-right: 100px;">
             <%= user_id %>
         </p>
+        <button id="log_out" class="logout">Log Out</button>
     </div>
     <div class="notices">
         <p class="rainbow-glow" id="notice"> Results will be available after 6:00 pm today!!!</p>

@@ -276,7 +276,8 @@
         </div>
     </div>
 
-    <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: grid; place-items: center; place-content: center;">
+        <button id="return" class="button-86" type="button">Home</button>
         <p id="responce">hellloo im here</p>
     </div>
     <script>
@@ -285,7 +286,10 @@
         const selectedList = document.getElementById('selected-colleges-list');
         const submitButton = document.getElementById('submit-btn');
         let selectedColleges = [];
-
+        const home = document.getElementById("return");
+        home.addEventListener('click', () => {
+            window.location = 'middle';
+        });
         // Event listener for button clicks
         buttons.forEach(button => {
             button.addEventListener('click', () => {
