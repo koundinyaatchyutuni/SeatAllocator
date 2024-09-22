@@ -1,0 +1,40 @@
+#countdown {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#submitBtn {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: gray;
+    border: none;
+    color: white;
+    cursor: not-allowed;
+}
+
+#submitBtn.enabled {
+    background-color: green;
+    cursor: pointer;
+}
+
+
+/* Style for the user list */
+
+#userList {
+    margin-top: 20px;
+}
+
+.user {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.user h3 {
+    margin: 0;
+}
+
+.colleges {
+    margin-top: 5px;
+    padding-left: 20px;
+}
