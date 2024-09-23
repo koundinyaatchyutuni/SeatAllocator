@@ -33,9 +33,15 @@ const collage = document.getElementById("collages_order");
 const result_button = document.getElementById("result_button");
 const userId = document.getElementById("display_id").textContent;
 const logout = document.getElementById("log_out");
-logout.addEventListener('click', function() {
-    // fetch('/');
-    window.location('main');
+logout.addEventListener('submit', function(event) {
+    event.preventDefault();
+    fetch('/render-main', {
+            method: 'POST'
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    // window.location('main.html');
 });
 result_button.addEventListener('click', async() => {
     const resp = await fetch('get-result', {

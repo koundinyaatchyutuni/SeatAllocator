@@ -261,8 +261,16 @@ app.post('/submit-form', async(req, res) => {
 });
 
 // Serve HTML files
+app.get('/render-main', (req, res) => {
+    try {
+        console.log("hello im here");
+        res.redirect('/');
+    } catch (err) {
+        console.error(err);
+    }
+
+});
 app.get('/', (req, res) => {
-    console.log("opened fetch");
     res.sendFile(path.join(__dirname, 'views', 'main.html'));
 });
 app.get('/submit', (req, res) => {
