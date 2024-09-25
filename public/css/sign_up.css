@@ -1,6 +1,6 @@
 body {
     /* background-color: rgb(241, 240, 240); */
-    background-color: rgb(227, 253, 229);
+    background-color: rgba(255, 255, 255, 0.393);
     align-content: center;
     display: flex;
     justify-content: center;
@@ -8,30 +8,42 @@ body {
     vertical-align: middle;
 }
 
-input.user_id {
+
+/* input.user_id {
     margin-bottom: 0px;
 }
 
 input.rank {
     margin-bottom: 0px;
-}
+} */
 
 input {
     border-radius: 6px;
-    border-color: rgb(100, 250, 117);
+    /* border-color: rgb(100, 250, 117); */
+    border-color: rgb(222, 215, 215);
     border-style: ridge;
     background-color: #fff;
     margin-bottom: 8px;
     margin-left: 8px;
     margin-right: 8px;
-    padding: 2px;
+    /* padding: 1px; */
     color: #1c1e21;
     vertical-align: text-top;
-    transition: 0.15s;
-    font-size: 20px;
+    transition: 0.25s;
+    font-size: 16px;
     line-height: 48px;
-    padding: 0 16px;
+    padding: 0 10px;
     width: 332px;
+}
+
+input::placeholder {
+    transition: color 0.5s ease;
+    font-size: 0.7em;
+    /* Reduce the font size */
+    vertical-align: super;
+    /* Align it as superscript */
+    position: relative;
+    top: -1em;
 }
 
 input:focus {
@@ -49,14 +61,20 @@ input:hover {
     box-shadow: 2px 2px 5px rgb(113, 242, 184);
 }
 
+input:focus::placeholder {
+    color: transparent;
+    /* Hide the placeholder when the input is focused */
+}
+
 div.main_container {
     display: grid;
     place-items: center;
     /* align-items: center; */
     background-color: #fff;
-    box-shadow: 2px 2px 5px lightgray;
+    box-shadow: 2px 2px 15px lightgray;
     margin-top: 50px;
-    padding: 10px;
+    height: 450px;
+    /* padding: 10px; */
     border-radius: 8px;
 }
 
@@ -81,12 +99,32 @@ div.main_container {
 #user_form {
     display: grid;
     place-items: center;
+    height: 95%;
+    padding: 15px;
+    align-self: start;
+    margin-top: 5px;
 }
 
 .sign_up:hover {
     background-color: #36a420;
     box-shadow: 2px 2px 5px lightgreen;
     color: white;
+}
+
+.aval-container {
+    display: flex;
+    justify-content: center;
+    margin: 0px;
+}
+
+#user-availability {
+    margin-right: 17px;
+}
+
+#rank-availability {
+    display: grid;
+    margin-left: 25px;
+    align-content: end;
 }
 
 .available {
