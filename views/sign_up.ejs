@@ -19,14 +19,13 @@
                 <input type="tel" class="phone_no" name="phone_number" placeholder="phone numer">
                 <input type="email" class="email" name="email" placeholder="email" required>
             </div>
-            <div class="user_id">
-                <input type="text" class="user_id" name="user_id" id="user_id" placeholder="User ID" required>
-                <input type="number" class="rank" name="rank" placeholder="rank" id="rank" required>
-                <div class="aval-container">
+            <div class="user_id" style="display: flex;justify-content:flex-start;align-items:center;unicode-bidi: isolate;">
+                <div class="user_id_container" id="user_id_container" style="display: flex;justify-content:start;align-items:center"><input type="text" class="user_id" name="user_id" id="user_id" placeholder="User ID" required><span id="userIdStatus" style="margin-left: 11px;"></span></div>
+                <div class="rank_container" id="rank_container" style="display: flex;justify-content:start;align-items:center"> <input type="number" class="rank" name="rank" placeholder="rank" id="rank" required><span id="rankStatus" style="margin-left:11px;"></span></div>
+                <!-- <div class="aval-container">
                     <p id="user-availability" class="available" name="user-aval"></p>
                     <p id="rank-availability" class="available" name="ranl-aval"></p>
-                </div>
-
+                </div> -->
             </div>
             <div class="password_setup">
                 <input type="password" class="create_password" name="password" placeholder="enter a password" id="password" required>

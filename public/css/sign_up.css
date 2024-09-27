@@ -17,6 +17,78 @@ input.rank {
     margin-bottom: 0px;
 } */
 
+.user_id_container {
+    border-radius: 6px;
+    /* border-color: rgb(100, 250, 117); */
+    border-color: rgb(222, 215, 215);
+    border-style: ridge;
+    border-width: 2px;
+    background-color: #fff;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+    /* padding: 1px; */
+    color: #1c1e21;
+    vertical-align: text-top;
+    transition: 0.25s;
+    font-size: 16px;
+    line-height: 48px;
+    height: 47px;
+    /* padding-right: 10px; */
+    width: 352px;
+}
+
+.rank_container {
+    border-radius: 6px;
+    /* border-color: rgb(100, 250, 117); */
+    border-color: rgb(222, 215, 215);
+    border-style: ridge;
+    border-width: 2px;
+    background-color: #fff;
+    margin-bottom: 8px;
+    margin-left: 10px;
+    margin-right: 8px;
+    /* padding: 1px; */
+    color: #1c1e21;
+    vertical-align: text-top;
+    transition: 0.25s;
+    font-size: 16px;
+    line-height: 48px;
+    /* padding-right: 10px; */
+    height: 47px;
+    width: 352px;
+}
+
+.user_id_container:hover {
+    border: 2px solid rgb(100, 250, 117);
+    /* border-color: lightblue; */
+    box-shadow: 2px 2px 5px rgb(113, 242, 184);
+}
+
+.user_id_container:focus {
+    border: 2px solid rgb(117, 250, 100);
+    /* border-color: #00bf7d; */
+    /* background-color: rgb(227, 253, 229); */
+    box-shadow: 2px 2px 5px rgb(113, 242, 184);
+    outline: rgb(100, 250, 117);
+    color: black;
+}
+
+.rank_container:hover {
+    border: 2px solid rgb(100, 250, 117);
+    /* border-color: lightblue; */
+    box-shadow: 2px 2px 5px rgb(113, 242, 184);
+}
+
+.rank_container:focus {
+    border: 2px solid rgb(117, 250, 100);
+    /* border-color: #00bf7d; */
+    /* background-color: rgb(227, 253, 229); */
+    box-shadow: 2px 2px 5px rgb(113, 242, 184);
+    outline: rgb(100, 250, 117);
+    color: black;
+}
+
 input {
     border-radius: 6px;
     /* border-color: rgb(100, 250, 117); */
@@ -49,7 +121,7 @@ input::placeholder {
 input:focus {
     border: 2px solid rgb(117, 250, 100);
     /* border-color: #00bf7d; */
-    background-color: rgb(227, 253, 229);
+    /* background-color: rgb(227, 253, 229); */
     box-shadow: 2px 2px 5px rgb(113, 242, 184);
     outline: rgb(100, 250, 117);
     color: black;
@@ -64,6 +136,54 @@ input:hover {
 input:focus::placeholder {
     color: transparent;
     /* Hide the placeholder when the input is focused */
+}
+
+input.user_id {
+    border: none;
+    width: 288px;
+    margin-left: 0px;
+    margin-right: 0px;
+    /* margin-top: 2px; */
+    margin-bottom: 0px;
+    height: 30px;
+}
+
+input.user_id:hover {
+    border: none;
+    box-shadow: none;
+}
+
+input.user_id:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+input.rank {
+    border: none;
+    width: 288px;
+    margin-left: 0px;
+    margin-right: 0px;
+    /* margin-top: 2px; */
+    margin-bottom: 0px;
+    height: 30px;
+}
+
+input.rank:hover {
+    border: none;
+    box-shadow: none;
+}
+
+input.rank:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 div.main_container {
