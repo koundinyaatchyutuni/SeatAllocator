@@ -3,8 +3,10 @@ const cnfPassword = document.getElementById("cnf_password");
 var id = document.getElementById("user_id");
 const button = document.getElementById("sign_up");
 const position = document.getElementById("rank");
-const validate1 = document.getElementById("rank-availability");
-const validate2 = document.getElementById("user-availability");
+const validate2 = document.getElementById("userIdStatus");
+const validate1 = document.getElementById("rankStatus");
+const user_container = document.getElementById("user_id_container");
+const rank_container = document.getElementById("rank_container");
 id.addEventListener('input', async function(event) {
     event.preventDefault();
     const userId = id.value;
@@ -19,18 +21,21 @@ id.addEventListener('input', async function(event) {
     const data = await resp.json();
 
     const sign_upButton = document.getElementById("sign_up");
-    if (data.available) {
-        validate2.innerHTML = "user ID available ✅";
+    if (data.available) { //data.available will be true when the user_id is available in data that is no duplicate user_id.
+        validate2.innerHTML = "✔️";
         validate2.style.color = 'green';
-        if (validate1.innerHTML == "rank is  valied✅") {
+        if (validate1.innerHTML == "✔️") {
             sign_upButton.addEventListener('mouseover', () => {
                 sign_upButton.style.cursor = 'pointer';
             });
             sign_upButton.disabled = false;
         }
     } else {
-        validate2.innerHTML = "try another user ID ❌";
+        validate2.innerHTML = "❌";
         validate2.style.color = 'red';
+        user_container.addEventListener('focus', () => {
+            user_container.style.borderColor = 'red';
+        })
         sign_upButton.addEventListener('mouseover', () => {
             sign_upButton.style.cursor = 'not-allowed';
         });
@@ -51,17 +56,20 @@ position.addEventListener('input', async function(event) {
 
     const sign_upButton = document.getElementById("sign_up");
     if (data.available) {
-        validate1.innerHTML = "rank is  valied✅";
+        validate1.innerHTML = "✔️";
         validate1.style.color = 'green';
-        if (validate2.innerHTML == "user ID available ✅") {
+        if (validate2.innerHTML == "✔️") {
             sign_upButton.addEventListener('mouseover', () => {
                 sign_upButton.style.cursor = 'pointer';
             });
             sign_upButton.disabled = false;
         }
     } else {
-        validate1.innerHTML = "rank is invalied❌";
+        validate1.innerHTML = "❌";
         validate1.style.color = 'red';
+        rank_container.addEventListener('focus', () => {
+            rank_container.style.borderColor = 'red';
+        })
         sign_upButton.addEventListener('mouseover', () => {
             sign_upButton.style.cursor = 'not-allowed';
         });
