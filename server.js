@@ -81,6 +81,7 @@ app.post('/is_unique_userid', async(req, res) => {
     try {
 
         const uid = req.body.user_id;
+        // console.log(uid.length);
         const user = await collection.findOne({ 'user_id': uid });
         if (!user) {
             res.json({ available: true });
