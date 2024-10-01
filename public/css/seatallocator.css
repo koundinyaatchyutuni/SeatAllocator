@@ -1,6 +1,8 @@
 body {
-    display: grid;
-    padding: 5px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 #selected-colleges-list {
@@ -8,13 +10,48 @@ body {
 }
 
 .main-container {
+    /* flex: 1; */
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .container {
-    width: 45%;
+    max-height: 400px;
+    /* min-height: 300px; */
+    /* Set the height limit for the div */
+    width: 200px;
+    overflow-y: auto;
+    /* Enable vertical scroll if content overflows */
+    /* border: 1px solid #ccc; */
+    padding: 10px;
+}
+
+#search_clg {
+    outline: none;
+    border: none;
+}
+
+.search_clg_container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 10px;
+    width: 200px;
+    height: 28px;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    /* height: fit-content; */
+    padding-left: 10px;
+}
+
+.search_clg_container:hover {
+    width: 220px;
+    height: 30px;
+    outline: none;
+    border: 1px solid #98e2f9;
+    box-shadow: inset;
 }
 
 
