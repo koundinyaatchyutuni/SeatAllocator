@@ -21,10 +21,42 @@ body {
     /* min-height: 300px; */
     /* Set the height limit for the div */
     width: 200px;
-    overflow-y: auto;
+    overflow-y: scroll;
     /* Enable vertical scroll if content overflows */
     /* border: 1px solid #ccc; */
     padding: 10px;
+}
+
+.container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    /* Darker color on hover */
+    cursor: pointer;
+    width: 12px;
+    /* Expand width on hover */
+}
+
+
+/* Active effect: expand when dragging */
+
+.container::-webkit-scrollbar-thumb:active {
+    background-color: #333;
+    /* Even darker when actively dragging */
+    width: 14px;
+    cursor: pointer;
+    /* Further expand when dragging */
 }
 
 #search_clg {
