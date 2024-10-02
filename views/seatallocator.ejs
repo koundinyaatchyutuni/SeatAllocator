@@ -17,13 +17,27 @@
         </p>
     </div>
     <div class="main-container">
-        <div class="container buttons-list">
-            <button data-value="College 1" class="button-86">College 1</button>
-            <button data-value="College 2" class="button-86">College 2</button>
-            <button data-value="College 3" class="button-86">College 3</button>
-            <button data-value="College 4" class="button-86">College 4</button>
-            <button data-value="College 5" class="button-86">College 5</button>
+
+        <div class="search_button_container">
+            <div class="search_clg_container">
+                <input type="text" id="search_clg" placeholder="Search here">
+                <img src="/images/search-icon.png" alt="not available" style="width: 20px;margin-left:auto;margin-right: 5px;">
+            </div>
+            <div class="container buttons-list" id="buttonContainer" style="display: grid;place-items:center">
+
+                <button data-value="College 1" class="button-86">College 1</button>
+                <button data-value="College 2" class="button-86">College 2</button>
+                <button data-value="College 3" class="button-86">College 3</button>
+                <button data-value="College 4" class="button-86">College 4</button>
+                <button data-value="College 5" class="button-86">College 5</button>
+                <button data-value="College 6" class="button-86">College 6</button>
+                <button data-value="College 7" class="button-86">College 7</button>
+                <button data-value="College 8" class="button-86">College 8</button>
+                <button data-value="College 9" class="button-86">College 9</button>
+                <button data-value="College 10" class="button-86">College 10</button>
+            </div>
         </div>
+
 
         <!-- Right side: Selected Colleges -->
         <div class="container selected-list">
@@ -34,7 +48,7 @@
         </div>
     </div>
 
-    <div style="display: grid; place-items: center; place-content: center;">
+    <div style="display: grid; place-items: center; place-content: center;margin-top:auto">
         <button id="return" class="button-86" type="button">Home</button>
         <p id="responce">hellloo im here</p>
     </div>
@@ -43,6 +57,18 @@
         const buttons = document.querySelectorAll('.buttons-list button');
         const selectedList = document.getElementById('selected-colleges-list');
         const submitButton = document.getElementById('submit-btn');
+        document.getElementById('search_clg').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const buttons = document.querySelectorAll('#buttonContainer button');
+
+            buttons.forEach(button => {
+                if (button.textContent.toLowerCase().includes(searchTerm)) {
+                    button.style.display = 'block';
+                } else {
+                    button.style.display = 'none';
+                }
+            });
+        });
         let selectedColleges = [];
         const home = document.getElementById("return");
         home.addEventListener('click', () => {
