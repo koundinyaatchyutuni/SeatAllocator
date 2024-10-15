@@ -65,9 +65,11 @@
 
             buttons.forEach(button => {
                 if (button.textContent.toLowerCase().includes(searchTerm)) {
-                    button.style.display = 'block';
+                    button.classList.remove('hidden');
+                    //button.classList.add('highlight');
                 } else {
-                    button.style.display = 'none';
+                    button.classList.add('hidden');
+                    // button.classList.remove('highlight');
                 }
             });
         });
