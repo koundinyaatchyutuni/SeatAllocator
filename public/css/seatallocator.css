@@ -5,16 +5,12 @@ body {
     min-height: 100vh;
 }
 
-#selected-colleges-list {
-    margin-bottom: 5px;
-}
-
 .main-container {
     flex: 1;
     /* width: 100%; */
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .container {
@@ -22,10 +18,40 @@ body {
     /* min-height: 300px; */
     /* Set the height limit for the div */
     width: 200px;
+    margin-top: 50px;
     overflow-y: scroll;
     /* Enable vertical scroll if content overflows */
     /* border: 1px solid #ccc; */
     padding: 10px;
+}
+
+#selected-colleges-list {
+    margin-top: 0px;
+    margin-bottom: 15px;
+    max-height: 320px;
+    overflow-y: scroll;
+}
+
+.selected-list {
+    /* display: flex;
+    /* align-items: center; */
+    /* justify-content: flex-end; */
+    margin-top: 50px;
+    position: relative;
+    border: 1px solid black;
+    padding: 10px;
+    height: 420px;
+    background-color: #f9f9f9;
+}
+
+.selected-list li {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    background-color: white;
+    cursor: move;
+    list-style-type: none;
 }
 
 .container::-webkit-scrollbar {
@@ -69,7 +95,7 @@ body {
     display: flex;
     justify-content: start;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 50px;
     width: 200px;
     height: 28px;
     color: #000;
@@ -170,22 +196,6 @@ body {
     cursor: pointer;
 }
 
-.selected-list {
-    border: 1px solid black;
-    padding: 20px;
-    min-height: 300px;
-    background-color: #f9f9f9;
-}
-
-.selected-list li {
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    background-color: white;
-    cursor: move;
-    list-style-type: none;
-}
-
 #seat-allocator {
     display: flex;
     width: 100%;
@@ -264,6 +274,7 @@ body {
 .button-58 {
     background-color: #06f;
     border: 2px solid #06f;
+    border-radius: 8px;
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
@@ -313,6 +324,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#submit-btn {
+    position: absolute;
+    bottom: 8px;
+    /* Adjust the spacing from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 #responce {
