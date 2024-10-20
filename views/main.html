@@ -31,19 +31,23 @@
         <form action="/sign_up" method="get">
             <input type="submit" value="Sign up" class="sign_up-button" id="sign_up">
         </form>
-        <script>
-            var icon = document.getElementById("show-icon");
-            var pass = document.getElementById("input-password");
-            icon.addEventListener('mouseover', function() {
-                icon.src = "/images/view.png";
-                pass.type = 'text';
-            });
-            icon.addEventListener('mouseout', function() {
-                pass.type = 'password';
-                icon.src = "/images/hidden.png";
-            });
-        </script>
+        <div>
+            <p id="alert"></p>
+        </div>
+
     </div>
+    <script>
+        var icon = document.getElementById("show-icon");
+        var pass = document.getElementById("input-password");
+        icon.addEventListener('mouseover', function() {
+            icon.src = "/images/view.png";
+            pass.type = 'text';
+        });
+        icon.addEventListener('mouseout', function() {
+            pass.type = 'password';
+            icon.src = "/images/hidden.png";
+        });
+    </script>
 </body>
 
 </html>
