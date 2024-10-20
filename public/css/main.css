@@ -16,7 +16,8 @@
     }
     
     body {
-        display: flex;
+        display: grid;
+        place-items: center;
         justify-content: center;
         vertical-align: middle;
         align-items: center;
