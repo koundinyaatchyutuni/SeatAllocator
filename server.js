@@ -54,7 +54,7 @@ app.post('/login', async(req, res) => {
             if (!isValid) {
                 return res.status(400).json({ msg: 'Invalid credentials' });
             }
-            res.redirect('/submit');
+            return res.json({ redirectUrl: '/submit' });
         } else {
             const user = await collection.findOne({ 'user_id': data.user_id });
             if (!user) {
@@ -68,13 +68,14 @@ app.post('/login', async(req, res) => {
             }
 
             req.session.user_id = data.user_id;
-            res.redirect('/middle');
+            return res.json({ redirectUrl: '/middle' });
         }
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
 
 // Check if user_id is unique
 app.post('/is_unique_userid', async(req, res) => {
