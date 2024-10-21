@@ -6,37 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seat Allocate</title>
     <link rel="stylesheet" href="css\main.css">
-
 </head>
 
 <body>
     <div class="sign_in">
-        <form action="/login" method="post" name="sign_in_form" id="login_form">
-            <!-- <label for="user name">user name/user id</label> -->
-            <input type="text" class="user_name" name="user_id" placeholder="enter user id">
-
-            <!-- <label for="password">password</label> -->
-            <div class="password-input"><input type="password" class="password" name="password" placeholder="enter password" id="input-password">
-                <img src="/images/hidden.png" alt="show" class="show-icon" id="show-icon"></div>
-
-            <!-- <a href="seatallocator.html" class="login-button">seat</a> -->
+        <form id="login_form">
+            <input type="text" class="user_name" name="user_id" placeholder="enter user id" required>
+            <div class="password-input">
+                <input type="password" class="password" name="password" placeholder="enter password" id="input-password" required>
+                <img src="/images/hidden.png" alt="show" class="show-icon" id="show-icon">
+            </div>
             <input type="submit" class="login-button" value="login">
         </form>
         <a href="/images/Avatar.jpg" class="links">Forgotten password?</a>
-        <!-- <div> -->
         <svg width="100%" height="1%" class="line">
-               <line x1="20" y1="20%" x2="95%" y2="20%" stroke="lightgrey" stroke-width="1"/>
-            </svg>
-        <!-- </div> -->
+            <line x1="20" y1="20%" x2="95%" y2="20%" stroke="lightgrey" stroke-width="1"/>
+        </svg>
         <form action="/sign_up" method="get">
             <input type="submit" value="Sign up" class="sign_up-button" id="sign_up">
         </form>
         <div>
             <p id="alert"></p>
         </div>
-
     </div>
+
     <script>
+        // Show/hide password functionality
         var icon = document.getElementById("show-icon");
         var pass = document.getElementById("input-password");
         icon.addEventListener('mouseover', function() {
@@ -46,6 +41,47 @@
         icon.addEventListener('mouseout', function() {
             pass.type = 'password';
             icon.src = "/images/hidden.png";
+        });
+
+        // Handle form submission
+        const form = document.getElementById("login_form");
+        const alertMsg = document.getElementById("alert");
+
+        form.addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(form);
+            const data = {
+                user_id: formData.get("user_id"),
+                password: formData.get("password")
+            };
+
+            try {
+                // Send POST request to the server
+                const response = await fetch("/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // Handle response
+                const result = await response.json();
+                if (response.ok) {
+                    // Redirect to the appropriate page
+                    window.location.href = result.redirectUrl;
+                } else {
+                    // Show the error message in the alert paragraph
+                    alertMsg.textContent = result.msg;
+                    alertMsg.style.color = 'red'; // Set text color to red for errors
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alertMsg.textContent = "An unexpected error occurred.";
+                alertMsg.style.color = 'red';
+            }
         });
     </script>
 </body>
