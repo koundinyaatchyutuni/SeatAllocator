@@ -36,12 +36,15 @@ body {
     /* display: flex;
     /* align-items: center; */
     /* justify-content: flex-end; */
-    margin-top: 50px;
+    margin-top: 0px;
     position: relative;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     padding: 10px;
     height: 420px;
-    background-color: #f9f9f9;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 250px;
+    /* background-color: #f9f9f9; */
 }
 
 .selected-list li {
@@ -95,7 +98,7 @@ body {
     display: flex;
     justify-content: start;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 0px;
     width: 200px;
     height: 28px;
     color: #000;
