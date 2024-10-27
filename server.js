@@ -5,7 +5,7 @@ const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const path = require('path');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 5000;
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
@@ -133,11 +133,11 @@ app.post('/save-colleges-order', async(req, res) => {
 app.post('/main-cal', async(req, res) => {
     try {
         // Retrieve only the specified fields: user_id, colleges, and rank
-        console.log("entered main-cal!!");
-        const report = await collection.find({}, { projection: { user_id: 1, collages_order: 1, rank: 1 } }).sort({ rank: 1 }).toArray();
+        // console.log("entered main-cal!!");
+        const report = await collection.find({}, { projection: { user_id: 1, collages_order: 1, rank: 1, allocated_collage: 1 } }).sort({ rank: 1 }).toArray();
         const vacencies = await collages.find({}).toArray();
-        console.log(report);
-        console.log(vacencies);
+        console.log(typeof report);
+        // console.log(vacencies);
         return res.json({ information: report, vacancy: vacencies }); // Send the filtered data back as a JSON response
     } catch (err) {
         console.log("erroor occured");
@@ -153,10 +153,10 @@ app.post('/results-aval', async(req, res) => {
         // console.log(ackn);
         // console.log(userId);
         if (ackn.allocated_collage) {
-            console.log('The key "result" exists in ackn.');
+            // console.log('The key "result" exists in ackn.');
             res.json({ available: true });
         } else {
-            console.log('The key "result" does not exist in ackn.');
+            // console.log('The key "result" does not exist in ackn.');
             res.json({ available: false });
         }
     } catch (err) {
@@ -186,19 +186,19 @@ app.post('/results-upload', async(req, res) => {
     try {
         const result = String(req.body.result).trim();
         const user_id = String(req.body.userId).trim();
-        console.log("enterd results-upload");
-        console.log(result);
-        console.log(user_id);
+        // console.log("enterd results-upload");
+        // console.log(result);
+        // console.log(user_id);
         const test = await collection.updateOne({ 'user_id': user_id }, // Match condition
             {
                 $set: { 'allocated_collage': result } // Add the new field or update the value of an existing field
             }, { strict: false }
         );
         if (test.matchedCount > 0) {
-            console.log("succesfull");
+            // console.log("succesfull");
             res.json({ success: true, message: 'uploaded allocated collage' });
         } else {
-            console.log("unsuccesful");
+            // console.log("unsuccesful");
             res.json({ success: false, message: 'unable to upload !!!' });
         }
     } catch (err) {
@@ -212,9 +212,9 @@ app.post('/update-vacancies', async(req, res) => {
             delete collageId._id;
             const query = { uni: 1 };
             // {"_id":{"$oid":"66e7e97eefdf987fc76194be"}}
-            console.log("collage id:", collageId);
+            // console.log("collage id:", collageId);
             for (let key in collageId) {
-                console.log(key);
+                // console.log(key);
                 const update = {
                     $set: {
                         [key]: collageId[key]
@@ -248,12 +248,12 @@ app.post('/submit-form', async(req, res) => {
         dataToInsert.password = await bcrypt.hash(dataToInsert.password, salt);
         if (dataToInsert.user_id == "Admin@1") {
             const result = await admin_check.insertOne(dataToInsert);
-            console.log('Form data inserted:', result);
+            // console.log('Form data inserted:', result);
         }
         // Insert data into MongoDB
         else {
             const result = await collection.insertOne(dataToInsert);
-            console.log('Form data inserted:', result);
+            // console.log('Form data inserted:', result);
         }
         res.redirect('/');
     } catch (error) {

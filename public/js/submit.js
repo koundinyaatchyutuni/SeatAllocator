@@ -33,16 +33,10 @@ submitBtn.addEventListener('click', async function() {
              userList.appendChild(collages_info_div);
          });*/
         data.forEach(user => {
-            if (user.collages_order && user.collages_order.length > 0) {
+            if (user.collages_order && user.collages_order.length > 0 && !user.hasOwnProperty('allocated_collage')) {
                 const userDiv = document.createElement('div');
                 userDiv.classList.add('user');
-                let colgs = user.collages_order;
-                // Loop through the array and convert the names
-                //here error is value differe btween Collage 1 and collage_1.
-                let converted_Colleges = colgs.map(college => {
-                    let number = college.split(' ')[1]; // Extract the number
-                    return `collage_${number}`; // Return the new format
-                });
+                let converted_Colleges = user.collages_order;
                 let assign = "";
                 for (let i = 0; i < converted_Colleges.length; i++) {
                     let name = converted_Colleges[i];
@@ -72,7 +66,7 @@ submitBtn.addEventListener('click', async function() {
         });
         const collages_info_div = document.createElement('div');
         const collageHead = document.createElement('h3');
-        collageHead.textContent = `collage_1: ${dup.collage_1}, collage_2: ${dup.collage_2}, collage_3: ${dup.collage_3}, collage_4: ${dup.collage_4}, collage_5: ${dup.collage_5}`;
+        collageHead.textContent = `GVPCE: ${dup.GVPCE}, RVRJC: ${dup.RVRJC}, SRKR: ${dup.SRKR}, PVRS: ${dup.PVRS}, SVU: ${dup.SVU}, KLU:${dup.KLU}, GITAM: ${dup.GITAM}, ANITS: ${dup.ANITS}, VVIT:${dup.VVIT},KITS:${dup.KITS},VIGNAN:${dup.VIGNAN}`;
         collages_info_div.appendChild(collageHead);
         userList.appendChild(collages_info_div);
         fetch('/update-vacancies', {
