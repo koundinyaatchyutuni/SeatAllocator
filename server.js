@@ -30,11 +30,11 @@ const uri = "mongodb+srv://old-man_07:Koundinya_1@cluster0.a5qcwu9.mongodb.net/?
 // MongoDB Client
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect();
-const database = client.db('User_data');
-const collection = database.collection('Uinfo');
-const collages = database.collection('collages');
+const database = client.db('IPL');
+const collection = database.collection('users');
+const collages = database.collection('roles');
 // console.log("Connected to MongoDB!");
-const admin_check = database.collection('Uid');
+const admin_check = database.collection('admin');
 // Login route
 app.post('/login', async(req, res) => {
 
@@ -234,13 +234,12 @@ app.post('/update-vacancies', async(req, res) => {
     // Sign-up route
 app.post('/submit-form', async(req, res) => {
     try {
+        console.log("inside the submit form call");
+        const rank = Math.floor(Math.random() * 100000) + 1;
         const dataToInsert = {
             user_id: req.body.user_id,
             password: req.body.password,
-            first_name: req.body.first_name,
-            email: req.body.email,
-            phone_no: req.body.phone_number,
-            rank: req.body.rank
+            rank: rank
         };
 
         // Hash password before saving to database

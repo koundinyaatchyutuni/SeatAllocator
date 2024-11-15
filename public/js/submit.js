@@ -49,7 +49,7 @@ submitBtn.addEventListener('click', async function() {
                 // Add user ID and rank
                 const userHeader = document.createElement('h3');
 
-                userHeader.textContent = `User ID: ${user.user_id}, Rank: ${user.rank}, assigned_collage: ${assign}`;
+                userHeader.textContent = `User ID: ${user.user_id}, Rank: ${user.rank}, assigned_role: ${assign}`;
                 userDiv.appendChild(userHeader);
                 userList.appendChild(userDiv);
                 fetch('/results-upload', {
@@ -66,7 +66,7 @@ submitBtn.addEventListener('click', async function() {
         });
         const collages_info_div = document.createElement('div');
         const collageHead = document.createElement('h3');
-        collageHead.textContent = `GVPCE: ${dup.GVPCE}, RVRJC: ${dup.RVRJC}, SRKR: ${dup.SRKR}, PVRS: ${dup.PVRS}, SVU: ${dup.SVU}, KLU:${dup.KLU}, GITAM: ${dup.GITAM}, ANITS: ${dup.ANITS}, VVIT:${dup.VVIT},KITS:${dup.KITS},VIGNAN:${dup.VIGNAN}`;
+        collageHead.textContent = `AUCTIONEER: ${dup.AUCTIONEER}, CSK: ${dup.CSK}, MI: ${dup.MI}, RCB: ${dup.RCB}, KKR: ${dup.KKR}, RR:${dup.RR}, PBKS: ${dup.PBKS}, DC: ${dup.DC}, GT:${dup.GT},LSG:${dup.LSG},SRH:${dup.SRH}`;
         collages_info_div.appendChild(collageHead);
         userList.appendChild(collages_info_div);
         fetch('/update-vacancies', {

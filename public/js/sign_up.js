@@ -2,9 +2,9 @@ const givenPassword = document.getElementById("password");
 const cnfPassword = document.getElementById("cnf_password");
 var id = document.getElementById("user_id");
 const button = document.getElementById("sign_up");
-const position = document.getElementById("rank");
+// const position = document.getElementById("rank");
 const validate2 = document.getElementById("userIdStatus");
-const validate1 = document.getElementById("rankStatus");
+// const validate1 = document.getElementById("rankStatus");
 const user_container = document.getElementById("user_id_container");
 const rank_container = document.getElementById("rank_container");
 id.addEventListener('input', async function(event) {
@@ -27,7 +27,7 @@ id.addEventListener('input', async function(event) {
         validate2.style.color = 'green';
         user_container.style.border = '2px solid rgb(100, 250, 117)';
         user_container.style.boxShadow = '2px 2px 5px rgb(113, 242, 184)';
-        if (validate1.innerHTML == "✔️") {
+        if (validate2.innerHTML == "✔️") {
             sign_upButton.addEventListener('mouseover', () => {
                 sign_upButton.style.cursor = 'pointer';
             });
@@ -44,52 +44,21 @@ id.addEventListener('input', async function(event) {
         sign_upButton.disabled = true;
     }
 });
-position.addEventListener('input', async function(event) {
-    event.preventDefault();
-    const rank = position.value;
-    const resp = await fetch('/is_unique_rank', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ rank: rank })
-    });
-    const data = await resp.json();
-
-    const sign_upButton = document.getElementById("sign_up");
-    if (data.available) {
-        validate1.innerHTML = "✔️";
-        if (position.value == "") validate1.innerHTML = "";
-        validate1.style.color = 'green';
-        rank_container.style.border = '2px solid rgb(100, 250, 117)';
-        rank_container.style.boxShadow = '2px 2px 5px rgb(113, 242, 184)';
-        if (validate2.innerHTML == "✔️") {
-            sign_upButton.addEventListener('mouseover', () => {
-                sign_upButton.style.cursor = 'pointer';
-            });
-            sign_upButton.disabled = false;
-        }
-    } else {
-        validate1.innerHTML = "❌";
-        validate1.style.color = 'red';
-        rank_container.style.borderColor = 'RGB(255, 69, 0)';
-        rank_container.style.boxShadow = '1px 1px 1px RGBA(255, 69, 0,0.8)';
-        sign_upButton.addEventListener('mouseover', () => {
-            sign_upButton.style.cursor = 'not-allowed';
-        });
-        sign_upButton.disabled = true;
-    }
-});
 button.addEventListener('submit', function(event) {
     event.preventDefault();
+
     if (givenPassword.value === cnfPassword.value && givenPassword.value !== "") {
         const form = document.getElementById("user_form");
+        const formData = new FormData(form);
+        // const randomInt =  Math.floor(Math.random() * 100000) + 1;
+        // console.log(randomInt);
+
         fetch('/submit-form', {
                 method: 'POST',
                 // headers: {
                 //     'Content-Type': 'application/json',
                 // },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({ user_id: id.value.trim(), password: givenPassword.value.trim() })
             })
             .then(response => response.json())
             .then(data => {
